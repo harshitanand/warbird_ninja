@@ -49,5 +49,10 @@ def hooks(request):
     if request.method == 'POST':
         reponame = request.POST['repo_name']
         g = buildPyGithub(request)
-        url =expand("https://localhost:8000/webhooks/payload")
+        owner = g.get_user()
+        repo = reponame
+        url = expand("https://api.github.com/repos/%s/%s/hooks{?name,config,events}" % (owner,repo),
+                    name = "web", config = {"url": "http://example.com/webhook","content_type": "json"}, events = ["push","pull_request","watch"] )
+        res = req.post(url, headers={"Accept": "application/json"}).json()
         print reponame
+        return render(request, "payload.html", {"payload" : res})
