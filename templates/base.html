@@ -1,0 +1,40 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href={% static "css/bootstrap.min.css" %}>
+    <link rel="stylesheet" href={% static "css/bootstrap-theme.min.css" %}>
+    <link rel="stylesheet" href={% static "font-awesome/css/font-awesome.min.css" %}>
+    <title>{% block title %}User test{% endblock %}</title>
+</head>
+
+<body>
+    <div id="header">
+    {% block header %}
+    {% trans "Home" %} |
+
+    {% if user.is_authenticated %}
+        {% trans "Logged in" %}: {{ user.username }} 
+        (<a href="{% url 'auth_logout' %}">{% trans "Log out" %}</a> | 
+        <a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a>)
+    {% else %}
+       <a href="{% url 'auth_login' %}">{% trans "Log in" %}</a>
+    {% endif %}
+    <hr />
+    {% endblock %}
+    </div>
+
+    <div id="content">
+    {% block content %}{% endblock %}
+    </div>
+
+    <div id="footer">
+    {% block footer %}
+        <hr />
+    {% endblock %}
+    </div>
+</body>
+
+</html>

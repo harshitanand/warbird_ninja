@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+<form role="form" method="post" action="." class="form-horizontal">
+                {% csrf_token %}
+<h2 class="form-signin-heading">Sign Up Here</h2>
+
+    <div class="form-group" >
+        <p class="required"> <label for="id_username" class="col-lg-4 control-label">Username:</label>
+        <div class="col-sm-4">
+        <div class="input-group">
+        <input class="form-control"  id="id_username" maxlength="30" name="username" type="text"  placeholder="Enter username"/>
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        </div>
+        </div></p>
+    </div>
+    <div class="form-group">
+        <p class="required"><label for="id_email" class="col-lg-4 control-label">E-mail:</label>
+        <div class="col-sm-4">
+        <div class="input-group">
+        <input class="form-control" id="id_email" name="email" type="email" placeholder="Enter email" />
+        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+        </div>
+        </div></p>
+    </div>
+    <div class="form-group">
+        <p class="required"><label for="id_password1" class="col-lg-4 control-label">Password:</label>
+        <div class="col-sm-4">
+        <div class="input-group">
+        <input class="form-control" id="id_password1" name="password1" type="password" placeholder="Enter password" />
+        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+        </div>
+        </div></p>
+    </div>
+    <div class="form-group">
+        <p class="required"><label for="id_password2" class="col-lg-4 control-label">Password (again):</label>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <input class="form-control" id="id_password2" name="password2" type="password" placeholder="Enter password again" />
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                </div>
+            </div>
+        </p>
+    </div>
+
+    <button type="submit" class="btn btn-primary col-sm-5">SignUp
+        <span><i class="fa fa-user-plus"></i></span>
+    </button>
+</form>
+</div>
+{% endblock %}
