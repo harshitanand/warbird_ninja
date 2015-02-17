@@ -4,6 +4,7 @@ from warbird.settings import Github_client_id, Github_client_secret
 import requests as req
 from uritemplate import expand
 from github import Github, GithubException
+from lupine.models import Users_git_data
 import json
 
 # Create your views here.
@@ -54,5 +55,7 @@ def hooks(request):
         url = expand("https://api.github.com/repos/%s/%s/hooks{?name,config,events}" % (owner,repo),
                     name = "web", config = {"url": "http://example.com/webhook","content_type": "json"}, events = ["push","pull_request","watch"] )
         res = req.post(url, headers={"Accept": "application/json"}).json()
+        user_data = Users_git_data(name = owner, access_token = request.GET['access_token'], payload = res)
+        user_data.save()
         print reponame, owner
         return render(request, "payload.html", {"payload" : res})
