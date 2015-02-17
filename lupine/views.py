@@ -54,5 +54,5 @@ def hooks(request):
         url = expand("https://api.github.com/repos/%s/%s/hooks{?name,config,events}" % (owner,repo),
                     name = "web", config = {"url": "http://example.com/webhook","content_type": "json"}, events = ["push","pull_request","watch"] )
         res = req.post(url, headers={"Accept": "application/json"}).json()
-        print reponame
+        print reponame, owner
         return render(request, "payload.html", {"payload" : res})
