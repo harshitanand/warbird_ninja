@@ -44,6 +44,7 @@ def buildPyGithub(request):
         print token
         return Github(login_or_token=token, client_id=Github_client_id, client_secret=Github_client_secret)
 
+#### CLEAN COOKIES AND SESSIONS ####
 def clean(request):
     request.session.clear()
     return redirect(index(request))
