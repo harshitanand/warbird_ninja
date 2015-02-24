@@ -35,6 +35,7 @@ def index(request):
         except GithubException:
             return render(request,"Index.html",{"github_authorize_url": "https://github.com/login/oauth/authorize?client_id=f14052faddcf7e3fe42d",})
 
+#### AUTHENTICATION FUNCTION ####
 def buildPyGithub(request):
     token = request.session.get("github_token")
     if token is None:
