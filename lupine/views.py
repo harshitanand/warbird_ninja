@@ -56,7 +56,6 @@ def hooks(request):
         g = buildPyGithub(request)
         # url = expand("https://api.github.com/repos/%s/%s/hooks{?name,config,events}" % (owner,repo),
         #            name = "web", config = {"url": "http://example.com/webhook","content_type": "json"}, events = ["push","pull_request","watch"] )
-
         res = g.get_user().get_repo(reponame).create_hook(name="web", active=True, events=["push", "pull_request", "watch"], config={"url": "http://700cf151.ngrok.com/lupine/payload", "content_type": "json"})
         user_data = Users_git_data(name = g.get_user().name, access_token = request.session.get("github_token"))
         user_data.save()
