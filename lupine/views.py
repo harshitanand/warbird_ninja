@@ -64,5 +64,6 @@ def hooks(request):
         print res.last_response.message
         return HttpResponseRedirect("/lupine/payload")
 
+#### DISPLAY PAYLOAD ####
 def payload(request):
         return HttpResponse(request.GET)
