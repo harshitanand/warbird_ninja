@@ -26,7 +26,7 @@ def callback(request):
 @login_required
 def index(request):
     g = buildPyGithub(request)
-    
+
     if g is None:
         return render(request,"Index.html",{"github_authorize_url": "https://github.com/login/oauth/authorize?client_id=f14052faddcf7e3fe42d&scope=repo,user:email,admin:repo_hook"})
     else:
