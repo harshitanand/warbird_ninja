@@ -87,7 +87,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = True
+#EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'harshitanand94@gmail.com'
 EMAIL_HOST_PASSWORD = '@@ubuntu@@'
