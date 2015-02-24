@@ -49,6 +49,7 @@ def clean(request):
     request.session.clear()
     return redirect(index(request))
 
+#### CREATE HOOK TO A REPO ####
 def hooks(request):
     if request.method == 'POST':
         reponame = request.POST['repo_name']
