@@ -8,13 +8,13 @@
     <title>REPOS LIST</title>
 </head>
 <body>
-<b>The Users are</b>
+<b>Hi {{ user.name }} you repos are listed here do select one</b>
 <form method="post" action="/lupine/webhooks/">
     {% for repo in repos %}
         <input type="radio" name="repo_name" value="{{ repo.name }}">{{ repo.name }}
         <br><br>
     {% endfor %}
-        <input type="submit" value="see payload">
+        <input type="submit" value="see payload" class="btn-group-lg" style="color: #000000">
 </form>
 </body>
 </html>

@@ -98,7 +98,7 @@ REGISTRATION_OPEN = True
 LOGIN_URL = '/accounts/login/'
 
 Github_client_id = "f14052faddcf7e3fe42d"
-Github_client_secret = "79f152197adb690138bc0a53e2bcdad9b3136290"
+Github_client_secret = "712d3eb8448cfa6a74df2fba7be941e1b58a421d"
 
 STATIC_URL = '/static/'
 STATIC_PATH = os.path.join(BASE_DIR, 'static')

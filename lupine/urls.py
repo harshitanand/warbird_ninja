@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name="index"),
     url(r'^callback', views.callback, name="callback"),
     url(r'^clean', views.clean, name="clean"),
-    url(r'^webhooks', views.hooks, name="hooks")
+    url(r'^webhooks', views.hooks, name="hooks"),
+    url(r'^payload', views.payload, name="payload")
 )

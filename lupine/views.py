@@ -6,13 +6,12 @@ from uritemplate import expand
 from github import Github, GithubException
 from lupine.models import Users_git_data
 import json
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 
 # Create your views here.
-@login_required
 def home(request):
     return render(request, 'Index.html')
 
-@login_required
 def callback(request):
     url = expand("https://github.com/login/oauth/access_token{?client_id,client_secret,code}",
                  client_id = Github_client_id, client_secret = Github_client_secret, code = request.GET["code"])
@@ -24,13 +23,14 @@ def callback(request):
         request.session["github_scopes"] = r["scope"].split(",")
     return redirect("lupine.views.index")
 
+@login_required
 def index(request):
     g = buildPyGithub(request)
     if g is None:
-        return render(request,"Index.html",{"github_authorize_url": "https://github.com/login/oauth/authorize?client_id=f14052faddcf7e3fe42d",})
+        return render(request,"Index.html",{"github_authorize_url": "https://github.com/login/oauth/authorize?client_id=f14052faddcf7e3fe42d&scope=repo,user:email,admin:repo_hook"})
     else:
         try:
-            return render(request,"repolist.html",{"github_authorize_url": "https://github.com/login/oauth/authorize?client_id=f14052faddcf7e3fe42d&scope=repo,user:email,read:repo_hook","repos": g.get_user().get_repos(),"github_scopes": request.session["github_scopes"],})
+            return render(request,"repolist.html",{"github_authorize_url": "https://github.com/login/oauth/authorize?client_id=f14052faddcf7e3fe42d&scope=repo,user:email,admin:repo_hook","repos": g.get_user().get_repos(),"user":g.get_user(),"github_scopes": request.session["github_scopes"],})
         except GithubException:
             return render(request,"Index.html",{"github_authorize_url": "https://github.com/login/oauth/authorize?client_id=f14052faddcf7e3fe42d",})
 
@@ -50,12 +50,15 @@ def hooks(request):
     if request.method == 'POST':
         reponame = request.POST['repo_name']
         g = buildPyGithub(request)
-        owner = g.get_user()
-        repo = reponame
-        url = expand("https://api.github.com/repos/%s/%s/hooks{?name,config,events}" % (owner,repo),
-                    name = "web", config = {"url": "http://example.com/webhook","content_type": "json"}, events = ["push","pull_request","watch"] )
-        res = req.post(url, headers={"Accept": "application/json"}).json()
-        user_data = Users_git_data(name = owner, access_token = request.GET['access_token'], payload = res)
+        # url = expand("https://api.github.com/repos/%s/%s/hooks{?name,config,events}" % (owner,repo),
+        #            name = "web", config = {"url": "http://example.com/webhook","content_type": "json"}, events = ["push","pull_request","watch"] )
+
+        res = g.get_user().get_repo(reponame).create_hook(name="web", active=True, events=["push", "pull_request", "watch"], config={"url": "http://700cf151.ngrok.com/lupine/payload", "content_type": "json"})
+        user_data = Users_git_data(name = g.get_user().name, access_token = request.session.get("github_token"))
         user_data.save()
-        print reponame, owner
-        return render(request, "payload.html", {"payload" : res})
+        print reponame
+        print res.last_response.message
+        return HttpResponseRedirect("/lupine/payload")
+
+def payload(request):
+        return HttpResponse(request.GET)
