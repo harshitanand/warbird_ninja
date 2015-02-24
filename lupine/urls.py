@@ -10,5 +10,5 @@ urlpatterns = patterns('',
     url(r'^callback', views.callback, name="callback"),
     url(r'^clean', views.clean, name="clean"),
     url(r'^webhooks', views.hooks, name="hooks"),
-    url(r'^payload', views.payload, name="payload")
+    url(r'^payload', views.payload, name="payload"),
 )

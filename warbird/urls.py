@@ -10,5 +10,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^callback', views.callback, name="callback"),
     url(r'^accounts/', include('registration.urls')),
-    url(r'^lupine/', include('lupine.urls'))
+    url(r'^lupine/', include('lupine.urls')),
 )
